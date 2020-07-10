@@ -11,6 +11,19 @@ Deploy this SMT by placing the jar in a directory in the `plugin.path` loaded by
 See the [Custom transformations](https://docs.confluent.io/current/connect/transforms/custom.html#custom-transform) 
 docs for more details.
 
+## Setup
+
+Add a transform to the list of transforms on a connector and set the `type` to `org.example.proto.TestSmt$Value`.
+
+Only message values can be cast. Casting key fields to optional wouldn't really make sense...
+
+An example using the Debezium unwrap SMT:
+```
+"transforms": "Unwrap,CastOptional",
+"transforms.Unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+"transforms.CastOptional.type": "org.example.proto.TestSmt$Value"
+```
+
 ## Ideal Architecture
 
 This is a prototype to support the JDBC Sink connector for a replica where constraints do not need to be exact.
